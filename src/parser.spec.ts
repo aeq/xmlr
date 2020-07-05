@@ -1,14 +1,13 @@
-'use strict';
-
 import { expect } from 'chai';
 import Parser from './index';
+import "mocha";
 
-import fs from 'fs';
+import { createReadStream } from 'fs';
 
 describe('node-xml-stream', function () {
     describe('Emit instruction', function () {
         it('#on(instruction)', function (done) {
-            let p = new Parser();
+            const p = new Parser();
 
             p.on('instruction', function (name, attrs) {
                 expect(name).to.eql('xml');
@@ -22,7 +21,7 @@ describe('node-xml-stream', function () {
     });
     describe('Emit Tag after that have namespace ', function () {
         it('#on(instruction)', function (done) {
-            let p = new Parser();
+            const p = new Parser();
 
             p.on('opentag', function (name, attrs) {
                 expect(name).to.eql('imo:openimmo');
@@ -40,7 +39,7 @@ describe('node-xml-stream', function () {
 
     describe('Emit opentag', function () {
         it('#on(opentag)', function (done) {
-            let p = new Parser();
+            const p = new Parser();
 
             p.on('opentag', function (name, attrs) {
                 expect(name).to.eql('root');
@@ -56,7 +55,7 @@ describe('node-xml-stream', function () {
 
     describe('Emit closetag', function () {
         it('#on(closetag)', function (done) {
-            let p = new Parser();
+            const p = new Parser();
 
             p.on('closetag', function (name) {
                 expect(name).to.eql('root');
@@ -67,7 +66,7 @@ describe('node-xml-stream', function () {
         });
 
         it('#on(closetag) self closing.', function (done) {
-            let p = new Parser();
+            const p = new Parser();
             p.on('closetag', function (name, attrs) {
                 expect(name).to.eql('self');
                 expect(attrs)
@@ -79,7 +78,7 @@ describe('node-xml-stream', function () {
             done();
         });
         it('#on(closetag) empty self closing.', function (done) {
-            let p = new Parser();
+            const p = new Parser();
             p.on('closetag', function (name, attrs) {
                 console.log(name);
                 expect(name).to.eql('self');
@@ -92,7 +91,7 @@ describe('node-xml-stream', function () {
             done();
         });
         it('#on(closetag) empty self closing without space.', function (done) {
-            let p = new Parser();
+            const p = new Parser();
             p.on('closetag', function (name, attrs) {
                 console.log(name);
                 expect(name).to.eql('self');
@@ -108,7 +107,7 @@ describe('node-xml-stream', function () {
 
     describe('Emit text', function () {
         it('#on(text)', function (done) {
-            let p = new Parser();
+            const p = new Parser();
             p.on('text', function (text) {
                 expect(text).to.eql('SteelJuice');
                 done();
@@ -119,7 +118,7 @@ describe('node-xml-stream', function () {
 
     describe('Emit CDATA', function () {
         it('#on(cdata)', function (done) {
-            let p = new Parser();
+            const p = new Parser();
 
             p.on('cdata', function (cdata) {
                 expect(cdata).to.eql('<p>cdata-text</br></p>');
@@ -132,7 +131,7 @@ describe('node-xml-stream', function () {
 
     describe('Emit CDATA with square-bracket text', function () {
         it('#on(cdata)', function (done) {
-            let p = new Parser();
+            const p = new Parser();
 
             p.on('cdata', function (cdata) {
                 expect(cdata).to.eql(
@@ -149,7 +148,7 @@ describe('node-xml-stream', function () {
 
     describe('Ignore comments', function () {
         it('#on(text) with comments', function (done) {
-            let p = new Parser();
+            const p = new Parser();
             p.on('text', function (text) {
                 expect(text).to.eql('TEXT');
                 done();
@@ -163,8 +162,8 @@ describe('node-xml-stream', function () {
 
     describe('Stream', function () {
         it('#pipe() a stream.', function (done) {
-            let p = new Parser();
-            let stream = fs.createReadStream('./test/intertwingly.atom');
+            const p = new Parser();
+            const stream = createReadStream('./test/intertwingly.atom');
             stream.pipe(p);
 
             // Count the number of entry tags found (start/closing) and compare them (they should be the same) when the stream is completed.

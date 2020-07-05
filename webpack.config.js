@@ -2,8 +2,7 @@ var path = require('path');
 
 module.exports = {    
     entry: {
-        parser: './src/index',
-        "parser.spec": './src/parser.spec'
+        parser: './src/index',        
     },
     mode: "development",
     target: "node",

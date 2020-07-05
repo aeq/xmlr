@@ -2,6 +2,7 @@
     "compilerOptions": {
       "outDir": "./built",
       "allowJs": true,
-      "target": "es2019"
+      "target": "es2019",
+      "types": [ "node" ], 
     },   
   }

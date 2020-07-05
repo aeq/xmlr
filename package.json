@@ -4,10 +4,12 @@
 	"description": "A fast XML parser using streams.",
 	"main": "dist/index.js",
 	"scripts": {
-		"test": "mocha dist/**/*.spec.js",
-		"test:src": "mocha --require @babel/register --watch --watch-extensions js,ts src/**/*.spec.js ",
-		"test:src:inspect": "mocha --require babel-core/register --watch --watch-extensions js,ts --inspect-brk src/**/*.spec.js ",
+		"prebuild": "yarn run lint",
 		"build": "webpack",
+		"postbuild": "yarn test",
+		"test": "mocha -r ts-node/register src/**/*.spec.ts",
+		"test:src": "mocha --require @babel/register --watch --watch-extensions js,ts src/**/*.spec.js ",
+		"test:src:inspect": "mocha --require babel-core/register --watch --watch-extensions js,ts --inspect-brk src/**/*.spec.js ",		
 		"lint": "eslint . --ext .ts --ext .js"
 	},
 	"keywords": [
@@ -43,18 +45,22 @@
 		"@babel/plugin-transform-runtime": "^7.10.4",
 		"@babel/preset-env": "^7.10.4",
 		"@babel/preset-typescript": "^7.10.4",
+		"@babel/register": "^7.10.4",
+		"@types/node": "^14.0.14",
+		"@typescript-eslint/eslint-plugin": "^3.5.0",
+		"@typescript-eslint/parser": "^3.5.0",
 		"babel-loader": "^8.1.0",
+		"chai": "^4.2.0",
+		"eslint": "^7.4.0",
+		"eslint-config-prettier": "^6.11.0",
+		"eslint-plugin-prettier": "^3.1.4",
+		"mocha": "^8.0.1",
+		"prettier": "^2.0.5",
 		"typescript": "^3.9.6",
 		"webpack": "^4.43.0",
 		"webpack-cli": "^3.3.12",
-		"chai": "^4.2.0",
-		"eslint": "^7.4.0",
-		"mocha": "^8.0.1",
-		"@typescript-eslint/parser": "^3.5.0",
-		"@typescript-eslint/eslint-plugin": "^3.5.0",
-		"eslint-plugin-prettier": "^3.1.4",
-		"prettier": "^2.0.5",
-		"eslint-config-prettier": "^6.11.0",
-		"@babel/register": "^7.10.4"
+		"@types/mocha": "^7.0.2",
+		"@types/chai": "^4.2.11",
+		"ts-node": "^8.10.2"
 	}
 }
