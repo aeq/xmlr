@@ -1,4 +1,3 @@
-
 /**
  * A fast XML parser for NodeJS using Writable streams.
  *
