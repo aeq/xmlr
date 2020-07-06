@@ -1,8 +1,9 @@
 {
     "compilerOptions": {
-      "outDir": "./built",
-      "allowJs": true,
-      "target": "es2019",
-      "types": [ "node" ], 
-    },   
-  }
+        "outDir": "./built",
+        "allowJs": true,
+        "target": "es2019",
+        "types": ["node"],
+        "declaration": true
+    }
+}

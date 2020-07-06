@@ -1,6 +1,6 @@
 import { expect } from 'chai';
-import Parser from './index';
-import "mocha";
+import { Parser } from './index';
+import 'mocha';
 
 import { createReadStream } from 'fs';
 
@@ -77,7 +77,7 @@ describe('node-xml-stream', function () {
             p.write('<self name="steeljuice" />');
             done();
         });
-        it('#on(closetag) empty self closing.', function (done) {
+        it('#on(closetag) empty self closing without space.', function (done) {
             const p = new Parser();
             p.on('closetag', function (name, attrs) {
                 console.log(name);
@@ -90,7 +90,7 @@ describe('node-xml-stream', function () {
             p.write('<self/>');
             done();
         });
-        it('#on(closetag) empty self closing without space.', function (done) {
+        it('#on(closetag) empty self closing with space.', function (done) {
             const p = new Parser();
             p.on('closetag', function (name, attrs) {
                 console.log(name);
@@ -116,8 +116,8 @@ describe('node-xml-stream', function () {
         });
     });
 
-    describe('Emit CDATA', function () {
-        it('#on(cdata)', function (done) {
+    describe('Emit CDATA', () => {
+        it('#on(cdata)', (done) => {
             const p = new Parser();
 
             p.on('cdata', function (cdata) {
@@ -129,11 +129,11 @@ describe('node-xml-stream', function () {
         });
     });
 
-    describe('Emit CDATA with square-bracket text', function () {
-        it('#on(cdata)', function (done) {
+    describe('Emit CDATA with square-bracket text', () => {
+        it('#on(cdata)', (done) => {
             const p = new Parser();
 
-            p.on('cdata', function (cdata) {
+            p.on('cdata', (cdata) => {
                 expect(cdata).to.eql(
                     '<p>cdata-text with some square-bracket-wrapped text [[12345]]</br></p>'
                 );
@@ -146,22 +146,22 @@ describe('node-xml-stream', function () {
         });
     });
 
-    describe('Ignore comments', function () {
-        it('#on(text) with comments', function (done) {
+    describe('Ignore comments', () => {
+        it('#on(text) with comments', (done) => {
             const p = new Parser();
-            p.on('text', function (text) {
+            p.on('text', (text) => {
                 expect(text).to.eql('TEXT');
                 done();
             });
 
             p.write(
-        '<root><!--Comment is written here! -->TEXT<!-- another comment! --></root>'
+                '<root><!--Comment is written here! -->TEXT<!-- another comment! --></root>'
             );
         });
     });
 
-    describe('Stream', function () {
-        it('#pipe() a stream.', function (done) {
+    describe('Stream', () => {
+        it('#pipe() a stream.', (done) => {
             const p = new Parser();
             const stream = createReadStream('./test/intertwingly.atom');
             stream.pipe(p);
