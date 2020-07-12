@@ -2,8 +2,12 @@
     "compilerOptions": {
         "outDir": "./built",
         "allowJs": true,
-        "target": "es2019",
+        "target": "es5",
         "types": ["node"],
-        "declaration": true
+        "declaration": true,
+        "declarationDir": "lib",
+        "sourceMap": true,
+        "module": "es6",
+        "lib": ["es2015"],
     }
 }

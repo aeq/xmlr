@@ -2,8 +2,10 @@
     "name": "xmlr",
     "version": "1.0.12",
     "description": "A fast XML parser using streams implemented in Typescript.",
-    "main": "dist/index.js",
-    "private": true,
+    "main": "lib/index.js",
+    "module": "lib/index.es.js",
+	"types": "lib/index.d.ts",
+	"files": ["lib"],
     "scripts": {
         "prebuild": "yarn run lint",
         "build": "webpack",
@@ -11,7 +13,9 @@
         "test": "mocha -r ts-node/register src/**/*.spec.ts",
         "test:src": "mocha --require @babel/register --watch --watch-extensions js,ts src/**/*.spec.js ",
         "test:src:inspect": "mocha --require babel-core/register --watch --watch-extensions js,ts --inspect-brk src/**/*.spec.js ",
-        "lint": "eslint . --ext .ts --ext .js"
+        "lint": "eslint . --ext .ts --ext .js",
+        "build2": "rollup -c",
+		"watch": "rollup -cw",
     },
     "keywords": [
         "XML",
@@ -62,6 +66,8 @@
         "webpack-cli": "^3.3.12",
         "@types/mocha": "^7.0.2",
         "@types/chai": "^4.2.11",
-        "ts-node": "^8.10.2"
+        "ts-node": "^8.10.2",
+        "rollup": "^2.19.0",
+        "rollup-plugin-typescript2": "^0.27.1"
     }
 }
