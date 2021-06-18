@@ -1,5 +1,5 @@
-  {
-  "name": "xmlr",
+{
+  "name": "@aequilibrium/xmlr",
   "version": "0.1.0",
   "description": "A fast XML parser using streams implemented in Typescript.",
   "main": "dist/index.js",
