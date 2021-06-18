@@ -1,67 +1,47 @@
-{
-    "name": "xmlr",
-    "version": "1.0.12",
-    "description": "A fast XML parser using streams implemented in Typescript.",
-    "main": "dist/index.js",
-    "private": true,
-    "scripts": {
-        "prebuild": "yarn run lint",
-        "build": "webpack",
-        "postbuild": "yarn test",
-        "test": "mocha -r ts-node/register src/**/*.spec.ts",
-        "test:src": "mocha --require @babel/register --watch --watch-extensions js,ts src/**/*.spec.js ",
-        "test:src:inspect": "mocha --require babel-core/register --watch --watch-extensions js,ts --inspect-brk src/**/*.spec.js ",
-        "lint": "eslint . --ext .ts --ext .js"
-    },
-    "keywords": [
-        "XML",
-        "XML Parser",
-        "XML Stream Parser",
-        "XML Stream",
-        "Streaming XML",
-        "Fast XML Parser",
-        "nodeJS"
-    ],
-    "author": "Tommy Dronkers",
-    "contributors": [
-        {
-            "name": "Mario Fahlandt"
-        },
-        {
-            "name": "Markus Velten"
-        },
-        {
-            "name": "Jeffrey Drake"
-        }
-    ],
-    "license": "MIT",
-    "repository": {
-        "type": "git",
-        "url": "https://github.com/madebyjeffrey/xmlr"
-    },
-    "devDependencies": {
-        "@babel/cli": "^7.10.4",
-        "@babel/core": "^7.10.4",
-        "@babel/plugin-proposal-class-properties": "^7.10.4",
-        "@babel/plugin-transform-runtime": "^7.10.4",
-        "@babel/preset-env": "^7.10.4",
-        "@babel/preset-typescript": "^7.10.4",
-        "@babel/register": "^7.10.4",
-        "@types/node": "^14.0.14",
-        "@typescript-eslint/eslint-plugin": "^3.5.0",
-        "@typescript-eslint/parser": "^3.5.0",
-        "babel-loader": "^8.1.0",
-        "chai": "^4.2.0",
-        "eslint": "^7.4.0",
-        "eslint-config-prettier": "^6.11.0",
-        "eslint-plugin-prettier": "^3.1.4",
-        "mocha": "^8.0.1",
-        "prettier": "^2.0.5",
-        "typescript": "^3.9.6",
-        "webpack": "^4.43.0",
-        "webpack-cli": "^3.3.12",
-        "@types/mocha": "^7.0.2",
-        "@types/chai": "^4.2.11",
-        "ts-node": "^8.10.2"
-    }
+  {
+  "name": "xmlr",
+  "version": "0.1.0",
+  "description": "A fast XML parser using streams implemented in Typescript.",
+  "main": "dist/index.js",
+  "types": "dist/index",
+  "private": true,
+  "scripts": {
+    "prepublishOnly": "tsc",
+    "build": "tsc",
+    "test": "jest src/**/*.spec.ts",
+    "lint": "eslint . --ext .ts --ext .js"
+  },
+  "keywords": [
+    "XML",
+    "XML Parser",
+    "XML Stream Parser",
+    "XML Stream",
+    "Streaming XML",
+    "Fast XML Parser",
+    "nodeJS",
+    "Typescript"
+  ],
+  "author": "Aequilibrium Software Inc",
+  "homepage": "https://aequilibrium.com/",
+  "license": "MIT",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/aeq/xmlr"
+  },
+  "devDependencies": {
+    "@types/mocha": "^7.0.2",
+    "@types/chai": "^4.2.11",
+    "@types/node": "^14.0.14",
+    "@typescript-eslint/eslint-plugin": "^3.5.0",
+    "@typescript-eslint/parser": "^3.5.0",
+    "eslint": "^7.4.0",
+    "eslint-config-airbnb-base": "^14.2.1",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-import": "^2.23.3",
+    "eslint-plugin-prettier": "^3.1.4",
+    "jest": "^27.0.1",
+    "prettier": "^2.0.5",
+    "typescript": "^4.0.0",
+    "ts-node": "^8.10.2"
+  }
 }

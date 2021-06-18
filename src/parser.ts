@@ -1,35 +1,3 @@
-/**
- * A fast XML parser for NodeJS using Writable streams.
- *
- * What this is:
- * Simple and fast XML parser purley written for NodeJS. No extra production dependencies.
- * A handy way parse ATOM/RSS/RDF feeds and such. No validation is made on the document that is parsed.
- *
- * Motivation
- * There is already quite a few parsers out there. I just wanted a parser that was as tiny and fast as possible to handle easy parsing of
- * RSS/ATOM/RDF feeds using streams, no fancy stuff needed. If you want more functionality you should check out other recommended parsers (see below)
- *
- * Usage
- * Just #pipe() a <stream.Readable> and you are ready to listen for events.
- * You can also use the #write() method to write directly to the parser.
- *
- * The source is written using ES2015, babel is used to translate to the dist.
- *
- * Other recommended parsers for node that are great:
- * https://github.com/isaacs/sax-js
- * https://github.com/xmppjs/ltx
- *
- * Events:
- * - text
- * - instruction
- * - opentag
- * - closetag
- * - cdata
- *
- * Comments are ignored, so there is no events for them.
- *
- */
-
 import * as _stream from 'stream';
 
 enum STATE {
@@ -58,8 +26,11 @@ export const EVENTS = {
 
 export class Parser extends _stream.Writable {
     state = STATE.TEXT;
+
     buffer = '';
+
     pos = 0;
+
     tagType = TAG_TYPE.NONE;
 
     _write(
@@ -69,11 +40,11 @@ export class Parser extends _stream.Writable {
         done: () => void
     ): void {
         const chunk = typeof _chunk !== 'string' ? _chunk.toString() : _chunk;
-        for (let i = 0; i < chunk.length; i++) {
+        for (let i = 0; i < chunk.length; i += 1) {
             const c = chunk[i];
             const prev = this.buffer[this.pos - 1];
             this.buffer += c;
-            this.pos++;
+            this.pos += 1;
 
             switch (this.state) {
                 case STATE.TEXT:
@@ -130,6 +101,9 @@ export class Parser extends _stream.Writable {
                     )
                         this._onCommentEnd();
                     break;
+
+                default:
+                    break;
             }
         }
         done();
@@ -155,17 +129,17 @@ export class Parser extends _stream.Writable {
         const tag = this._endRecording();
 
         const _parseTagString2 = this._parseTagString(tag);
-        const name = _parseTagString2.name;
-        let attributes = _parseTagString2.attributes;
+        const { name } = _parseTagString2;
+        let { attributes } = _parseTagString2;
 
         if (name === null) {
             this.emit(
                 EVENTS.ERROR,
-                new Error('Failed to parse name for tag' + tag)
+                new Error(`Failed to parse name for tag${tag}`)
             );
         }
 
-        if (this.tagType && this.tagType == TAG_TYPE.OPENING) {
+        if (this.tagType && this.tagType === TAG_TYPE.OPENING) {
             this.emit(EVENTS.OPEN_TAG, name, attributes);
         }
 
@@ -202,13 +176,13 @@ export class Parser extends _stream.Writable {
         const inst = this._endRecording();
 
         const _parseTagString3 = this._parseTagString(inst);
-        const name = _parseTagString3.name;
-        const attributes = _parseTagString3.attributes;
+        const { name } = _parseTagString3;
+        const { attributes } = _parseTagString3;
 
         if (name === null) {
             this.emit(
                 EVENTS.ERROR,
-                new Error('Failed to parse name for inst' + inst)
+                new Error(`Failed to parse name for inst${inst}`)
             );
         }
         this.emit(EVENTS.INSTRUCTION, name, attributes);
@@ -243,9 +217,7 @@ export class Parser extends _stream.Writable {
      * @return {object}     {name, attributes}
      */
 
-    _parseTagString(
-        str: string
-    ): {
+    _parseTagString(str: string): {
         name: string | null;
         attributes: Record<string, unknown>;
     } {
@@ -257,15 +229,16 @@ export class Parser extends _stream.Writable {
             const attributesString = str.substr(name.length);
             const attributeRegexp = /([a-zäöüßÄÖÜA-Z0-9:_\-.]+?)="([^"]+?)"/g;
             let match = attributeRegexp.exec(attributesString);
-            const attributes = {};
+            const attributes: Record<string, unknown> = {};
             while (match != null) {
-                attributes[match[1]] = match[2];
+                const [_, key, value] = match;
+                attributes[key] = value;
                 match = attributeRegexp.exec(attributesString);
             }
             if (name[name.length - 1] === '/') {
                 name = name.substr(0, name.length - 1);
             }
-            return { name: name, attributes: attributes };
+            return { name, attributes };
         }
         return { name: null, attributes: {} };
     }

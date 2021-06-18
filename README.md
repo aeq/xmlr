@@ -1,51 +1,25 @@
 # xmlr
 
-### PreSummary
-
-This is forked from a fork, because I couldn't find a simple xml parser working with typescript. So I have converted this
-package to typescript and in the process of testing it.
-
----
-
-### Summary
-
--   A tiny simple and fast XML/HTML stream parser with an easy-to-use interface (using NodeJS streams)
--   A very effective (fast) way to detal with RSS/ATOM/RDF feeds
-
-Copy from https://github.com/Steeljuice/node-xml-stream because of inactivity of Project
-
----
-
 ### Motivation
 
-There are alot of good other xml/html parsers out there, this is just meant to be a tiny and easy to use stream-parser that is fast. It is a perfect match for use in feed parsers (e.g. ATOM/RSS/RDF)
+Looking for a Typescript, well documented XML Stream Parser, with few dependencies that can run in AWS Lambda
 
-If you need a parser that is more heavy-weight with more functionality I recommend `node-sax` https://github.com/isaacs/sax-js
+---
+### Summary
 
-### What does it do?
+- A tiny simple and fast XML/HTML stream parser with an easy-to-use interface (using NodeJS streams)
 
-Reads XML/HTML streams fast and emitts events for:
-
--   Tag Openings (opentag) <tag attr="1.0"\>
--   Closing tags (closetag) </tag\>
--   Self closing tags (closetag) <tag \/\>
--   CDATA (cdata) <[[CDATA[data]]>
--   Instructions (instruction) <?xml version="1.0?\>
-
-All comments are ignored (not emitted). `<!DOCTYPES`, `<!ENTITY` are also ignored, I haven't found any real need for them yet parsing RSS/ATOM/RDF.
-
-Important notice due some self closing tags do not have an empty space we strip the last / at the end of a tag name. So if your tag is named somthing/ it will not work.
-
+---
 ### Installation
 
 Install via NPM using command:
 
-`npm install --save node-xml-stream`
+`npm install --save @aequilibrium/xmlr`
 
 ### Usage
 
 ```
-let Parser = require('node-xml-stream');
+let Parser = require('@aequilibrium/xmlr');
 let fs = require('fs');
 
 let parser = new Parser();
@@ -96,7 +70,6 @@ stream.pipe(parser);
 ```
 
 ---
-
 ### Methods
 
 `#write(data)` - write data to the stream.
@@ -106,7 +79,6 @@ stream.pipe(parser);
 `#on(event, handler)` - Attach an eventhandler
 
 ---
-
 ### Events
 
 All the default stream events for NodeJS streams and the below extra events that are emitted:
@@ -120,10 +92,6 @@ All the default stream events for NodeJS streams and the below extra events that
 `cdata` - when CDATA is read. { text }
 
 `instruction` - When instruction is available { name, attributes }
-
-### Contributing
-
-Pull requests and stars always welcome. For bugs and feature requests, please [create an issue.](https://github.com/slippyex/node-xml-stream-parser/issues)
 
 ### License
 
