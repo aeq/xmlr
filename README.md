@@ -5,11 +5,13 @@
 Looking for a Typescript, well documented XML Stream Parser, with few dependencies that can run in AWS Lambda
 
 ---
+
 ### Summary
 
 - A tiny simple and fast XML/HTML stream parser with an easy-to-use interface (using NodeJS streams)
 
 ---
+
 ### Installation
 
 Install via NPM using command:
@@ -25,39 +27,39 @@ let fs = require('fs');
 let parser = new Parser();
 
 // <tag attr="hello">
-parser.on('opentag', (name, attrs) => {
-	// name = 'tag'
-	// attrs = { attr: 'hello' }
+parser.on('startElement', (name, attrs) => {
+ // name = 'tag'
+ // attrs = { attr: 'hello' }
 });
 
 // </tag>
-parser.on('closetag', name => {
-	// name = 'tag'
+parser.on('endElement', name => {
+ // name = 'tag'
 }
 
 // <tag>TEXT</tag>
 parser.on('text', text => {
-	// text = 'TEXT'
+ // text = 'TEXT'
 });
 
 // <[[CDATA['data']]>
 parser.on('cdata', cdata => {
-	// cdata = 'data'
+ // cdata = 'data'
 });
 
 // <?xml version="1.0"?>
 parser.on('instruction', (name, attrs) => {
-	// name = 'xml'
+ // name = 'xml'
     // attrs = { version: '1.0' }
 });
 
 // Only stream-errors are emitted.
 parser.on('error', err => {
-	// Handle a parsing error
+ // Handle a parsing error
 });
 
 parser.on('finish', () => {
-	// Stream is completed
+ // Stream is completed
 });
 
 // Write data to the stream.
@@ -70,6 +72,7 @@ stream.pipe(parser);
 ```
 
 ---
+
 ### Methods
 
 `#write(data)` - write data to the stream.
@@ -79,13 +82,14 @@ stream.pipe(parser);
 `#on(event, handler)` - Attach an eventhandler
 
 ---
+
 ### Events
 
 All the default stream events for NodeJS streams and the below extra events that are emitted:
 
-`opentag` - when a tag is opened { name, attributes }
+`startElement` - when a tag is opened { name, attributes }
 
-`closetag`- When a tag is closed { name }
+`endElement`- When a tag is closed { name }
 
 `text` - when text is retrieved { text }
 

@@ -19,8 +19,8 @@ export const EVENTS = {
     ERROR: 'error',
     TEXT: 'text',
     INSTRUCTION: 'instruction',
-    OPEN_TAG: 'opentag',
-    CLOSE_TAG: 'closetag',
+    OPEN_TAG: 'startElement',
+    CLOSE_TAG: 'endElement',
     CDATA: 'cdata',
 };
 
@@ -117,7 +117,7 @@ export class Parser extends _stream.Writable {
     }
 
     _onStartNewTag(): void {
-        const text = this._endRecording().trim();
+        const text = this._endRecording();
         if (text) {
             this.emit(EVENTS.TEXT, text);
         }

@@ -1,10 +1,9 @@
 {
   "name": "@aequilibrium/xmlr",
-  "version": "0.1.0",
+  "version": "0.1.2",
   "description": "A fast XML parser using streams implemented in Typescript.",
   "main": "dist/index.js",
   "types": "dist/index",
-  "private": true,
   "scripts": {
     "prepublishOnly": "tsc",
     "build": "tsc",
